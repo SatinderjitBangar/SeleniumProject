@@ -67,6 +67,8 @@ public class TC5_TC6 {
 
 		driver.findElement(By.xpath("//*[@title='Proceed to checkout']")).click();
 
+		String expectedAmount = driver.findElement(By.id("total_price")).getText();
+
 		// Click proceed to checkout shopping cart summary
 		driver.findElement(By.xpath("//*[@id=\"center_column\"]/p[2]/a[1]")).click();
 
@@ -92,8 +94,11 @@ public class TC5_TC6 {
 
 		// check if the new order is placed and the total is correct
 		List<WebElement> rows = driver.findElements(By.xpath("//tr"));
-		String cost = rows.get(1).findElement(By.xpath(".//td[3]")).getText();
-		assertEquals("$71.51", cost);
+		String actualCostOnOrderHistory = rows.get(1).findElement(By.xpath(".//td[3]")).getText();
+
+		assertEquals(expectedAmount, actualCostOnOrderHistory);
+
+		driver.close();
 
 	}
 }
